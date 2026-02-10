@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <!-- กำหนด charset และ responsive -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Lock Screen</title>
 
   <!-- ฟอนต์ภาษาไทยฟรีน่ารัก -->
   <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     /* ================== พื้นหลังหลัก ================== */
     body {
       margin: 0;
       height: 100vh;
-      background: #F7F3F5; /* สีชมพูอ่อน */
+      background: #F7F3F5;
+      /* สีชมพูอ่อน */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -36,7 +39,8 @@
     .time {
       font-size: 56px;
       font-weight: 300;
-      color: #4A3842;
+      color: #5E4B56;
+      font-family: 'Prompt', sans-serif;
     }
 
     /* วันที่ */
@@ -44,7 +48,21 @@
       margin-top: 4px;
       font-size: 16px;
       color: #5E4B56;
+      font-family: 'Prompt', sans-serif;
+
     }
+
+    /* ================== รูป ================== */
+    .lock-image {
+      margin-top: 20px;
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 24px;
+
+      box-shadow: 0 8px 24px rgba(181, 131, 157, 0.25);
+    }
+
 
     /* ================== ส่วนรหัส ================== */
     .passcode {
@@ -62,7 +80,8 @@
     /* หัวใจแต่ละดวง */
     .dot {
       font-size: 22px;
-      color: #E3BAC6; /* หัวใจว่าง */
+      color: #C9A3B1;
+      /* หัวใจว่าง */
     }
 
     /* หัวใจว่าง */
@@ -73,7 +92,7 @@
     /* หัวใจเต็ม */
     .dot.filled::before {
       content: "♥";
-      color: #B5839D;
+      color: #C9A3B1;
     }
 
     /* ================== แป้นพิมพ์ตัวเลข ================== */
@@ -83,19 +102,27 @@
       gap: 18px;
       max-width: 240px;
       margin: auto;
+      justify-items: center;
     }
 
     .key {
+      width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: #EAD6DE;
+      background: #B5839D;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-family: 'Prompt', sans-serif;
       font-size: 20px;
-      color: #4A3842;
+      color: #F7F3F5;
       cursor: pointer;
       transition: transform 0.1s ease;
+    }
+
+    .key.delete {
+      font-size: 18px;
+      color: #F7F3F5;
     }
 
     /* เอฟเฟกต์กด */
@@ -105,11 +132,13 @@
 
     /* ข้อความ error */
     .error {
-      margin-top: 16px;
+      margin-bottom: 32px;
       font-size: 14px;
-      color: #B94A5A;
+      color: #4A3842;
       display: none;
+      font-family: 'Anuphan', sans-serif;
     }
+    
   </style>
 </head>
 
@@ -122,6 +151,9 @@
     <!-- วันที่ -->
     <div class="date" id="date">Loading...</div>
 
+    <!-- รูป -->
+    <img src="image1.jpg" alt="memory" class="lock-image">
+
     <div class="passcode">
 
       <!-- หัวใจแทนรหัส 6 หลัก -->
@@ -133,6 +165,9 @@
         <div class="dot"></div>
         <div class="dot"></div>
       </div>
+
+      <!-- แจ้งเตือนรหัสผิด -->
+      <div class="error" id="error">HINT : วันที่เราเริ่มเป็นเรา</div>
 
       <!-- แป้นตัวเลข -->
       <div class="keypad">
@@ -147,17 +182,16 @@
         <div class="key">9</div>
         <div></div>
         <div class="key">0</div>
+        <div class="key delete">⌫</div>
         <div></div>
       </div>
 
-      <!-- แจ้งเตือนรหัสผิด -->
-      <div class="error" id="error">รหัสไม่ถูกต้อง</div>
     </div>
   </div>
 
   <script>
     /* ================== ตั้งค่ารหัส ================== */
-    const correctPasscode = "040224"; // รหัสครบรอบ 💕
+    const correctPasscode = "040224";
     const maxLength = 6;
     let input = "";
 
@@ -169,6 +203,16 @@
     keys.forEach(key => {
       key.addEventListener("click", () => {
 
+
+        if (key.classList.contains("delete")) {
+          if (input.length > 0) {
+            dots[input.length - 1].classList.remove("filled");
+            input = input.slice(0, -1);
+          }
+          return;
+        }
+
+
         if (input.length < maxLength) {
           input += key.textContent;
           dots[input.length - 1].classList.add("filled");
@@ -179,6 +223,7 @@
         }
       });
     });
+
 
     /* ================== ตรวจรหัส ================== */
     function checkPasscode() {
@@ -193,7 +238,6 @@
       }
     }
 
-    /* ล้างค่า */
     function reset() {
       input = "";
       dots.forEach(dot => dot.classList.remove("filled"));
@@ -218,4 +262,5 @@
     setInterval(updateTime, 1000);
   </script>
 </body>
+
 </html>
