@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Screen</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            background: #F7F3F5;
+            font-family: 'Anuphan', sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main {
+            width: 100%;
+            max-width: 390px;
+            padding: 32px 20px 60px;
+            box-sizing: border-box;
+        }
+
+        /* ================= widget ================= */
+        .widget {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(181, 131, 157, 0.25);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .days {
+            font-family: 'Prompt', sans-serif;
+            font-size: 36px;
+            font-weight: 500;
+            color: #B5839D;
+        }
+
+        .days span {
+            font-family: 'Anuphan', sans-serif;
+            font-size: 14px;
+            color: #8B6F7C;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* ================= message ================= */
+        .message {
+            font-family: 'Anuphan', sans-serif;
+            font-size: 20px;
+            color: #8B6F7C;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* ================= photo + timeline ================= */
+        .photo-box {
+            margin-bottom: 32px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(181, 131, 157, 0.25);
+        }
+
+        .timeline {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #4A3842;
+            text-align: center;
+        }
+
+        /* ================= envelope ================= */
+        .envelope-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* ตัวซอง */
+        .envelope {
+            width: 320px;
+            height: 240px;
+            background: #EAD6DE;
+            border: 2px solid #C9A3B1;
+            border-radius: 18px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 10px 28px rgba(181, 131, 157, 0.35);
+            overflow: hidden;
+        }
+
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 56px;
+            background: #EAD6DE;
+            border-bottom: 2px solid #C9A3B1;
+            transform-origin: top center;
+            transition: transform 0.6s ease;
+            z-index: 4;
+        }
+
+
+        .sticker {
+            position: absolute;
+            top: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #F7F3F5;
+            border: 2px solid #C9A3B1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #B5839D;
+            font-size: 20px;
+            z-index: 11;
+        }
+
+
+        .letter {
+            position: absolute;
+            bottom: -100%;
+            left: 12px;
+            right: 12px;
+            background: #EFE6EC;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #4A3842;
+            transition: 0.7s ease;
+            z-index: 2;
+        }
+
+
+        .envelope.open .flap {
+            transform: rotateX(160deg);
+        }
+
+        .envelope.open .letter {
+            top: 20px;
+        }
+
+        .envelope.open .sticker {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.8);
+            transition: 0.3s ease;
+        }
+
+        .hint {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #8B6F7C;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+
+        <!-- widget -->
+        <div class="widget">
+            <div class="days" id="days">0
+                <span>days with you My favorite story</span>
+            </div>
+        </div>
+
+        <!-- Message -->
+        <div class="message">
+                You make ordinary days special.
+        </div>
+
+        <!-- photo + timeline1 -->
+        <div class="photo-box">
+            <img src="IMG_2154.jpg" class="photo">
+            <div class="timeline">
+                24 Dec 2023 — ไปห้องอ้วนครั้งแรก
+            </div>
+        </div>
+
+        <!-- photo + timeline2 -->
+        <div class="photo-box">
+            <img src="IMG_2876.jpg" class="photo">
+            <div class="timeline">
+                05 Feb 2024 — รูปคู่รูปแรก
+            </div>
+        </div>
+
+        <!-- photo + timeline3 -->
+        <div class="photo-box">
+            <img src="IMG_2895.jpg" class="photo">
+            <div class="timeline">
+                06 Feb 2024 — ทำโปรเจคด้วยกัน
+            </div>
+        </div>
+
+        <!-- photo + timeline4 -->
+        <div class="photo-box">
+            <img src="IMG_2945.jpg" class="photo">
+            <div class="timeline">
+                10 Feb 2024 — โดนเพื่อนแออบถ่ายรูปหวานๆรูปแรก
+            </div>
+        </div>
+
+        <!-- photo + timeline5 -->
+        <div class="photo-box">
+            <img src="IMG_3126.jpg" class="photo">
+            <div class="timeline">
+                22 Feb 2024 — นอกห้องอ้วนๆ
+            </div>
+        </div>
+
+        <!-- photo + timeline6 -->
+        <div class="photo-box">
+            <img src="IMG_3272.jpg" class="photo">
+            <div class="timeline">
+                06 Mar 2024 — แอบถ่ายในห้องเรียน
+            </div>
+        </div>
+
+        <!-- photo + timeline7 -->
+        <div class="photo-box">
+            <img src="IMG_3312.jpg" class="photo">
+            <div class="timeline">
+                11 Mar 2024 — ดูแลหมูเด้งป่วยหนัก
+            </div>
+        </div>
+
+        <!-- photo + timeline8 -->
+        <div class="photo-box">
+            <img src="IMG_3358.jpg" class="photo">
+            <div class="timeline">
+                19 Mar 2024 — โต้รุ่งทำโปรเจค
+            </div>
+        </div>
+
+        <!-- photo + timeline9 -->
+        <div class="photo-box">
+            <img src="IMG_3362.jpg" class="photo">
+            <div class="timeline">
+                19 Mar 2024 — โต้รุ่งทำโปรเจคเหมือนกัน
+            </div>
+        </div>
+
+        <!-- photo + timeline10 -->
+        <div class="photo-box">
+            <img src="image6.jpg" class="photo">
+            <div class="timeline">
+                11 Apr 2024 — กลับบ้านด้วยกัน
+            </div>
+        </div>
+
+        <!-- photo + timeline11 -->
+        <div class="photo-box">
+            <img src="IMG_2600.jpg" class="photo">
+            <div class="timeline">
+                08 Nov 2024 — ไปเที่ยวต่างจังหวัดด้วยกันครั้งแรก
+            </div>
+        </div>
+
+        <!-- photo + timeline12 -->
+        <div class="photo-box">
+            <img src="IMG_2611.jpg" class="photo">
+            <div class="timeline">
+                08 Nov 2024 — ไปเที่ยวต่างจังหวัดด้วยกันครั้งแรก
+            </div>
+        </div>
+
+        <!-- photo + timeline13 -->
+        <div class="photo-box">
+            <img src="image5.jpg" class="photo">
+            <div class="timeline">
+                31 Jan 2025 — เที่ยวต่างจังหวัดด้วยกันครั้งที่2
+            </div>
+        </div>
+
+        <!-- photo + timeline14 -->
+        <div class="photo-box">
+            <img src="image4.jpg" class="photo">
+            <div class="timeline">
+                31 Jan 2025 — พ่ออ้วนๆถ่ายรูปคู่ให้ครั้งแรก
+            </div>
+        </div>
+
+        <!-- photo + timeline15 -->
+        <div class="photo-box">
+            <img src="image1.jpg" class="photo">
+            <div class="timeline">
+                31 Jan 2025 — รูปคู่ดีๆรูปแรกเลยแหละ
+            </div>
+        </div>
+
+        <!-- photo + timeline16 -->
+        <div class="photo-box">
+            <img src="image2.jpg" class="photo">
+            <div class="timeline">
+                31 Jan 2025 — รูปที่อ้วนๆชอบที่สุด
+            </div>
+        </div>
+
+        <!-- photo + timeline17 -->
+        <div class="photo-box">
+            <img src="image3.jpg" class="photo">
+            <div class="timeline">
+                31 Jan 2025 — รูปที่ดีที่สุดในทริป
+            </div>
+        </div>
+
+        <!-- envelope -->
+        <div class="hint">แตะซองจดหมาย 💌</div>
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="front"></div>
+                <div class="flap"></div>
+                <div class="sticker">♥</div>
+
+                <div class="letter">
+                    <p>
+                        To. อ้วนๆ 🤍
+                        <br>
+                        <br>
+                        ขอบคุณที่ทำให้วันธรรมดาของเค้าไม่เคยเหงา ขอบคุณที่ยังจับมือกันอยู่ตรงนี้ ขอบคุณที่เป็นทุกๆอย่างของเค้า ถึงแม้ว่าเค้าจะดื้อ จะบ่น จะด่า จะตีๆอ้วน อ้วนๆก็ยังรักเค้า แต่ก็ตีละก็ดุเค้าอยู่ดี แต่เค้าจะอยู่ให้อ้วนจ้วบๆตลอดไปเลย
+                        <br>
+                        รักอ้วนนะ จ้วบๆ
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* ========== day counter ========== */
+        const startDate = new Date("2024-02-04");
+        const today = new Date();
+        const diffTime = today - startDate;
+        const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById("days").childNodes[0].nodeValue = days;
+
+        /* ========== envelope ========== */
+        const envelope = document.getElementById("envelope");
+
+        envelope.addEventListener("click", () => {
+            envelope.classList.toggle("open");
+        });
+    </script>
+
+</body>
+
+</html>
