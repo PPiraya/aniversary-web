@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+  <!-- กำหนด charset และ responsive -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>Lock Screen</title>
 
-  <!-- Google Font -->
+  <!-- ฟอนต์ภาษาไทยฟรีน่ารัก -->
   <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
+    /* ================== พื้นหลังหลัก ================== */
     body {
       margin: 0;
       height: 100vh;
-      background: #F7F3F5; /* Lavender Blush */
+      background: #F7F3F5; /* สีชมพูอ่อน */
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Anuphan', sans-serif;
     }
 
+    /* กล่อง Lock Screen */
     .lockscreen {
       width: 100%;
       max-width: 390px;
@@ -28,22 +32,26 @@
       text-align: center;
     }
 
+    /* เวลา */
     .time {
       font-size: 56px;
       font-weight: 300;
       color: #4A3842;
     }
 
+    /* วันที่ */
     .date {
       margin-top: 4px;
       font-size: 16px;
       color: #5E4B56;
     }
 
+    /* ================== ส่วนรหัส ================== */
     .passcode {
       margin-top: 64px;
     }
 
+    /* กล่องหัวใจ */
     .dots {
       display: flex;
       justify-content: center;
@@ -51,18 +59,24 @@
       margin-bottom: 32px;
     }
 
+    /* หัวใจแต่ละดวง */
     .dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: 1.5px solid #B5839D;
-      background: transparent;
+      font-size: 22px;
+      color: #E3BAC6; /* หัวใจว่าง */
     }
 
-    .dot.filled {
-      background: #B5839D;
+    /* หัวใจว่าง */
+    .dot::before {
+      content: "♡";
     }
 
+    /* หัวใจเต็ม */
+    .dot.filled::before {
+      content: "♥";
+      color: #B5839D;
+    }
+
+    /* ================== แป้นพิมพ์ตัวเลข ================== */
     .keypad {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -84,10 +98,12 @@
       transition: transform 0.1s ease;
     }
 
+    /* เอฟเฟกต์กด */
     .key:active {
       transform: scale(0.95);
     }
 
+    /* ข้อความ error */
     .error {
       margin-top: 16px;
       font-size: 14px;
@@ -99,17 +115,26 @@
 
 <body>
   <div class="lockscreen">
+
+    <!-- เวลา -->
     <div class="time" id="time">00:00</div>
+
+    <!-- วันที่ -->
     <div class="date" id="date">Loading...</div>
 
     <div class="passcode">
+
+      <!-- หัวใจแทนรหัส 6 หลัก -->
       <div class="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
       </div>
 
+      <!-- แป้นตัวเลข -->
       <div class="keypad">
         <div class="key">1</div>
         <div class="key">2</div>
@@ -125,36 +150,42 @@
         <div></div>
       </div>
 
+      <!-- แจ้งเตือนรหัสผิด -->
       <div class="error" id="error">รหัสไม่ถูกต้อง</div>
     </div>
   </div>
 
   <script>
-    const correctPasscode = "1234"; // 👈 เปลี่ยนรหัสตรงนี้
+    /* ================== ตั้งค่ารหัส ================== */
+    const correctPasscode = "040224"; // รหัสครบรอบ 💕
+    const maxLength = 6;
     let input = "";
 
     const dots = document.querySelectorAll(".dot");
     const keys = document.querySelectorAll(".key");
     const error = document.getElementById("error");
 
+    /* ================== กดตัวเลข ================== */
     keys.forEach(key => {
       key.addEventListener("click", () => {
-        if (input.length < 4) {
+
+        if (input.length < maxLength) {
           input += key.textContent;
           dots[input.length - 1].classList.add("filled");
         }
 
-        if (input.length === 4) {
+        if (input.length === maxLength) {
           setTimeout(checkPasscode, 200);
         }
       });
     });
 
+    /* ================== ตรวจรหัส ================== */
     function checkPasscode() {
       if (input === correctPasscode) {
         document.body.style.opacity = "0";
         setTimeout(() => {
-          window.location.href = "main.html"; // 👉 หน้าหลัก
+          window.location.href = "main.html";
         }, 400);
       } else {
         error.style.display = "block";
@@ -162,18 +193,25 @@
       }
     }
 
+    /* ล้างค่า */
     function reset() {
       input = "";
       dots.forEach(dot => dot.classList.remove("filled"));
       setTimeout(() => error.style.display = "none", 1200);
     }
 
+    /* ================== เวลา + วันที่ ================== */
     function updateTime() {
       const now = new Date();
       document.getElementById("time").textContent =
         now.toLocaleTimeString("th-TH", { hour: '2-digit', minute: '2-digit' });
+
       document.getElementById("date").textContent =
-        now.toLocaleDateString("th-TH", { weekday: 'long', day: 'numeric', month: 'long' });
+        now.toLocaleDateString("th-TH", {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long'
+        });
     }
 
     updateTime();
